@@ -8,5 +8,6 @@ git clone https://github.com/bcbro2021/netlib.git
 ```
 Inside Cargo.toml - <br />
 ```toml
+[dependencies]
 netlib={path="./netlib"}
 ```
