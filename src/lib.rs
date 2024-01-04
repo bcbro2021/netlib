@@ -41,3 +41,30 @@ pub mod tcp_socket {
         return String::from_utf8_lossy(&buffer[..size]).to_string();
     }
 }
+
+pub mod udp_socket {
+    use std::net::UdpSocket;
+
+    pub struct Socket {
+        pub addr: String,
+        pub sock: UdpSocket
+    }
+
+    pub fn create_socket(addr: &str) -> Socket {
+        return Socket {addr: addr.to_string(), sock: UdpSocket::bind("127.0.0.1").expect("err")};
+    }
+
+    impl Socket {
+        pub fn send_to(&self, msg: &str, target_addr: &String) {
+            self.sock.send_to(msg.as_bytes(), target_addr).expect("Failed to send message");
+        }
+
+        pub fn recv_from(&self, buf: usize) -> (String, String) {
+            let mut buffer = vec![0; buf];
+            let (size, src_addr) = self.sock.recv_from(&mut buffer).expect("Failed to receive response");
+            let response = String::from_utf8_lossy(&buffer[..size]).to_string();
+
+            return (response,src_addr.to_string());
+        }
+    }
+}
