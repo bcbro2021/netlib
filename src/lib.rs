@@ -17,7 +17,7 @@ pub mod socket {
     }
 
     pub fn test() {
-        println!("Testing Sock");
+        println!("Testing Soc");
     }
 
     // Server
