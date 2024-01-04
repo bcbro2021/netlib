@@ -51,7 +51,7 @@ pub mod udp_socket {
     }
 
     pub fn create_socket(addr: &str) -> Socket {
-        return Socket {addr: addr.to_string(), sock: UdpSocket::bind("127.0.0.1").expect("err")};
+        return Socket {addr: addr.to_string(), sock: UdpSocket::bind(addr).expect("err")};
     }
 
     impl Socket {
