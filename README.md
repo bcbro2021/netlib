@@ -12,6 +12,7 @@ Inside Cargo.toml - <br />
 netlib={path="./netlib"}
 ```
 ## Getting Started
+Let's create a simple tcp server-client communication
 ### Client
 ```rust
 use netlib::tcp_socket;
