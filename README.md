@@ -12,43 +12,44 @@ Inside Cargo.toml - <br />
 netlib={path="./netlib"}
 ```
 ## Getting Started
+Let's create a simple tcp server-client communication
 ### Client
 ```rust
-use netlib::socket;
+use netlib::tcp_socket;
 
 fn main() {
     // creating the client socket
-    let client: socket::Client = socket::create_client("127.0.0.1:1234");
+    let client: tcp_socket::Client = tcp_socket::create_client("127.0.0.1:1234");
 
     loop {
         // recieving the server message
-        let msg = socket::recv(&client.cli,2048);
+        let msg = tcp_socket::recv(&client.cli,2048);
         println!("{}", msg);
 
         // sending a message to the server
-        socket::send(&client.cli,"Hi Server....");
+        tcp_socket::send(&client.cli,"Hi Server....");
     }
     
 }
 ```
 ### Server
 ```rust
-use netlib::socket;
+use netlib::tcp_socket;
 use std::{thread, net::TcpStream};
 
 // handle multiple clients at once
 fn handle_client(client: TcpStream) {
     loop {
         // send and recieve data
-        socket::send(&client, "Hi client...");
-        let msg = socket::recv(&client, 2048);
+        tcp_socket::send(&client, "Hi client...");
+        let msg = tcp_socket::recv(&client, 2048);
         println!("{}", msg);
     }
 }
 
 fn main() {
     // server socket
-    let server: socket::Server = socket::create_server("127.0.0.1:1234");
+    let server: tcp_socket::Server = tcp_socket::create_server("127.0.0.1:1234");
 
     // check for client connections and create a new thread
     for cl in server.ser.incoming() {
@@ -57,4 +58,5 @@ fn main() {
         thread::spawn(move || {handle_client(client)});
     }
 }
+
 ```
